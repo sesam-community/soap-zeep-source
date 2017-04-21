@@ -45,7 +45,7 @@ def push():
 
     response=do_soap(entity,client)
     serialized_response=helpers.serialize_object(response)
-    rootlogger.info("SOAPResponse : \n" + str(response) + "\n----End-Response----")
+    rootlogger.info("Prosessed " + str(len(serialized_response)) + " Entities")
     return Response(response=json.dumps(serialized_response), mimetype='application/json')
 
 def do_soap(entity, client):
