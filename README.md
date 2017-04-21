@@ -24,6 +24,19 @@ All entities must have a "_soapheaders" attribute.
   }
 }
 ```
+##### Example returned result:
+```
+[
+    {
+        "Id": 1,
+        "foo": "bar"
+    },
+    {
+        "Id": 2,
+        "foo": "baz"
+    }
+]
+```
 ##### Example configuration:
 
 ```
@@ -47,3 +60,5 @@ All entities must have a "_soapheaders" attribute.
   }
 }
 ```
+
+
