@@ -16,3 +16,8 @@ def transit_decode_datetime(val):
         return datetime.datetime.strptime(val, '$%Y-%m-%d').date()
     else:
         return datetime.datetime.strptime(val, '$%Y-%m-%dT%H:%M:%S.%fZ')
+
+def json_serial(o):
+    ''''Serializing datetime to to json'''''
+    if type(o) is datetime.date or type(o) is datetime.datetime:
+        return o.isoformat()
