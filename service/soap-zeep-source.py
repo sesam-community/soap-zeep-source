@@ -32,21 +32,24 @@ client = Client(url, transport=transport)
 @app.route('/', methods=['POST'])
 def push():
 
-    entity = request.get_json()
+    entities = request.get_json()
+    return_entities = []
+    if not isinstance(entities, list):
+        entities = [entities]
 
-    if isinstance(entity, list):
-        return Response("Multiple entities is not supported",status=400, mimetype='text/plain')
+    for entity in entities:
+        if os.environ.get('transit_decode', 'false').lower() == "true":
+            rootlogger.info("transit_decode is set to True.")
+            entity = typetransformer.transit_decode(entity)
 
-    if os.environ.get('transit_decode', 'false').lower() == "true":
-        rootlogger.info("transit_decode is set to True.")
-        entity = typetransformer.transit_decode(entity)
+        rootlogger.info("Finished creating request: " + str(entity))
 
-    rootlogger.info("Finished creating request: " + str(entity))
+        response=do_soap(entity,client)
+        serialized_response=helpers.serialize_object(response)
+        return_entities.extend(serialized_response)
+        rootlogger.info("Prosessed " + str(len(serialized_response)) + " Entities")
 
-    response=do_soap(entity,client)
-    serialized_response=helpers.serialize_object(response)
-    rootlogger.info("Prosessed " + str(len(serialized_response)) + " Entities")
-    return Response(response=json.dumps(serialized_response, default=typetransformer.json_serial), mimetype='application/json')
+    return Response(response=json.dumps(return_entities, default=typetransformer.json_serial), mimetype='application/json')
 
 def do_soap(entity, client):
 
