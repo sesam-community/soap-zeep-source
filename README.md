@@ -3,7 +3,7 @@
 A small microservice to post data to a SOAP endpoint and receive result in JSON.
 All entities must have a "_soapheaders" attribute.
 
-[![Build Status](https://travis-ci.org/sesam-community/sesam-soap-zeep-source.svg?branch=master)](https://travis-ci.org/sesam-community/sesam-soap-zeep-source)
+[![Build Status](https://travis-ci.org/sesam-community/soap-zeep-source.svg?branch=master)](https://travis-ci.org/sesam-community/soap-zeep-source)
 
 ##### Example entity
 ```
